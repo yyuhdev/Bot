@@ -41,124 +41,76 @@ public class BotSettingGui {
         Gui gui = Gui.empty(9, 6);
         gui.setBackground(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE)
                 .setDisplayName(empty()));
-
-        if (bot instanceof KitBot) {
-            gui.setItem(4, 2, new SimpleItem(new ItemBuilder(Material.RED_DYE)
-                    .setDisplayName(wrap("<red>You can't edit a Kit Bot."))));
-
-            gui.setItem(4, 5, new SimpleItem(new ItemBuilder(Material.BARRIER)
-                    .setDisplayName(wrap("<red>Close")), click -> {
-                click.getPlayer().closeInventory();
-            }));
-            Window.single()
-                    .setGui(gui)
-                    .setTitle(wrap("<aqua>Bot Settings"))
-                    .build(player.getBukkitEntity()).open();
-            return;
-        }
-
-        addEquipmentItems(gui, show, 1, 1, EquipmentSlot.HEAD, settings);
-        addEquipmentItems(gui, show, 1, 2, EquipmentSlot.CHEST, settings);
-        addEquipmentItems(gui, show, 1, 3, EquipmentSlot.LEGS, settings);
-        addEquipmentItems(gui, show, 1, 4, EquipmentSlot.FEET, settings);
+        addEquipmentItems(gui, show, 1 , 1, EquipmentSlot.HEAD, settings);
+        addEquipmentItems(gui, show, 2, 1, EquipmentSlot.CHEST, settings);
+        addEquipmentItems(gui, show, 3, 1, EquipmentSlot.LEGS, settings);
+        addEquipmentItems(gui, show, 4, 1, EquipmentSlot.FEET, settings);
 
         if (settings.shield) {
-            gui.setItem(6, 2, new SimpleItem(new ItemBuilder(Material.SHIELD)
+            gui.setItem(4, 4, new SimpleItem(new ItemBuilder(Material.SHIELD)
                     .addEnchantment(Enchantment.MENDING, 1, true)
                     .addItemFlags(ItemFlag.HIDE_ENCHANTS)
-                    .setDisplayName(wrap("<aqua>Shield"))
+                    .setDisplayName(wrap("<#cdd6fa>Shield"))
                     .addLoreLines(empty())
-                    .addLoreLines(wrap("<gray>Selected: <green><bold>ON"))
+                    .addLoreLines(wrap("<grey>Should your bot use it's shield?"))
                     .addLoreLines(empty())
-                    .addLoreLines(wrap("<yellow>Click to disable!")), click -> {
+                    .addLoreLines(wrap("<#cdd6fa>Enabled: <green><bold>ENABLED"))
+                    .addLoreLines(empty())
+                    .addLoreLines(wrap("<#cdd6fa>\uD83D\uDF8D\u25cf Click to disable!")), click -> {
                 settings.shield = false;
                 show.run();
             }));
-            ItemStack baseItem = new ItemBuilder(Material.OAK_BUTTON)
-                    .setDisplayName(wrap("<aqua>Auto Hit"))
-                    .get();
-            setBoolItem(gui, show, 6, 3,
-                    settings.autoHit,
-                    new ItemBuilder(withType(baseItem, Material.DIAMOND_SWORD))
-                            .addEnchantment(Enchantment.MENDING, 1, true)
-                            .addItemFlags(ItemFlag.HIDE_ENCHANTS)
-                            .addLoreLines(empty())
-                            .addLoreLines(wrap("<gray>Selected: <green><bold>ON"))
-                            .addLoreLines(empty())
-                            .addLoreLines(wrap("<yellow>Click to toggle!"))
-                            .get(),
-                    new ItemBuilder(withType(baseItem, Material.WOODEN_SWORD))
-                            .addLoreLines(empty())
-                            .addLoreLines(wrap("<gray>Selected: <red><bold>OFF"))
-                            .addLoreLines(empty())
-                            .addLoreLines(wrap("<yellow>Click to toggle!"))
-                            .get(), val -> settings.autoHit = val);
         } else {
-            gui.setItem(6, 2, new SimpleItem(new ItemBuilder(Material.SHIELD)
+            gui.setItem(4, 4, new SimpleItem(new ItemBuilder(Material.SHIELD)
                     .addEnchantment(Enchantment.MENDING, 1, true)
                     .addItemFlags(ItemFlag.HIDE_ENCHANTS)
-                    .setDisplayName(wrap("<aqua>Shield"))
+                    .setDisplayName(wrap("<#cdd6fa>Shield"))
                     .addLoreLines(empty())
-                    .addLoreLines(wrap("<gray>Selected: <red><bold>OFF"))
+                    .addLoreLines(wrap("<grey>Should your bot use it's shield?"))
                     .addLoreLines(empty())
-                    .addLoreLines(wrap("<yellow>Click to enable!")), click -> {
+                    .addLoreLines(wrap("<#cdd6fa>Enabled: <red><bold>DISABLED"))
+                    .addLoreLines(empty())
+                    .addLoreLines(wrap("<#cdd6fa>\uD83D\uDF8D\u25cf Click to enable!")), click -> {
                 settings.shield = true;
                 show.run();
             }));
         }
 
-        setBoolItem(gui, show, 4, 2, settings.effects.contains(MobEffects.SLOW_FALLING),
+        setBoolItem(gui, show, 5, 4, settings.effects.contains(MobEffects.SLOW_FALLING),
                 new ItemBuilder(Material.FEATHER)
                         .addEnchantment(Enchantment.MENDING, 1, true)
                         .addItemFlags(ItemFlag.HIDE_ENCHANTS)
-                        .setDisplayName(wrap("<aqua>Feather Falling"))
+                        .setDisplayName(wrap("<#cdd6fa>Feather Falling"))
                         .addLoreLines(empty())
-                        .addLoreLines(wrap("<gray>Selected: <green><bold>ON"))
+                        .addLoreLines(wrap("<grey>Make your bot fall"))
+                        .addLoreLines(wrap("<grey>slower by enabling this"))
                         .addLoreLines(empty())
-                        .addLoreLines(wrap("<yellow>Click to toggle!"))
+                        .addLoreLines(wrap("<#cdd6fa>Enabled: <green><bold>ENABLED"))
+                        .addLoreLines(empty())
+                        .addLoreLines(wrap("<#cdd6fa>\uD83D\uDF8D\u25cf Click to toggle!"))
                         .get(),
                 new ItemBuilder(Material.FEATHER)
-                        .setDisplayName(wrap("<aqua>Feather Falling"))
+                        .setDisplayName(wrap("<#cdd6fa>Feather Falling"))
                         .addLoreLines(empty())
-                        .addLoreLines(wrap("<gray>Selected: <red><bold>OFF"))
+                        .addLoreLines(wrap("<grey>Make your bot fall"))
+                        .addLoreLines(wrap("<grey>slower by enabling this"))
                         .addLoreLines(empty())
-                        .addLoreLines(wrap("<yellow>Click to toggle!"))
+                        .addLoreLines(wrap("<#cdd6fa>Enabled: <red><bold>DISABLED"))
+                        .addLoreLines(empty())
+                        .addLoreLines(wrap("<#cdd6fa>\uD83D\uDF8D\u25cf Click to toggle!"))
                         .get(),
                 v -> {
                     if (v) settings.effects.add(MobEffects.SLOW_FALLING);
                     else settings.effects.remove(MobEffects.SLOW_FALLING);
                 });
-
-        setBoolItem(gui, show, 4, 3, settings.moveTowardsSpawner,
-                new ItemBuilder(Material.CHEST_MINECART)
-                        .setDisplayName(wrap("<aqua>Run at you"))
-                        .addLoreLines(empty())
-                        .addLoreLines(wrap("<gray>Causes the Bot to move towards you,"))
-                        .addLoreLines(wrap("<gray>while keeping its distance at 2 blocks."))
-                        .addLoreLines(wrap("<dark_gray>Doesn't move right after popping!"))
-                        .addLoreLines(empty())
-                        .addLoreLines(wrap("<gray>Selected: <green><bold>ON"))
-                        .addLoreLines(empty())
-                        .addLoreLines(wrap("<yellow>Click to toggle!"))
-                        .get(),
-                new ItemBuilder(Material.MINECART)
-                        .setDisplayName(wrap("<aqua>Run at you"))
-                        .addLoreLines(empty())
-                        .addLoreLines(wrap("<gray>Causes the Bot to move towards you,"))
-                        .addLoreLines(wrap("<gray>while keeping its distance at 2 blocks."))
-                        .addLoreLines(wrap("<dark_gray>Doesn't move right after popping!"))
-                        .addLoreLines(empty())
-                        .addLoreLines(wrap("<gray>Selected: <red><bold>OFF"))
-                        .addLoreLines(empty())
-                        .addLoreLines(wrap("<yellow>Click to toggle!"))
-                        .get(),
-                v -> settings.moveTowardsSpawner = v);
-
         if (bot == null) {
-            gui.setItem(5, 5, new SimpleItem(new ItemBuilder(Material.DIAMOND)
-                    .setDisplayName(wrap("<aqua>Spawn Bot"))
+            gui.setItem(7, 2, new SimpleItem(new ItemBuilder(Material.BREEZE_SPAWN_EGG)
+                    .setDisplayName(wrap("<#cdd6fa>Spawn Bot"))
                     .addLoreLines(empty())
-                    .addLoreLines(wrap("<yellow>Click to spawn!")), click -> {
+                    .addLoreLines(wrap("<grey>Spawn a pvp bot to"))
+                    .addLoreLines(wrap("<grey>practice D-Tapping and such"))
+                    .addLoreLines(empty())
+                    .addLoreLines(wrap("<#cdd6fa>\uD83D\uDF8D\u25cf Click to spawn!")), click -> {
                 Location pos = click.getPlayer().getLocation();
                 FakePlayer fakePlayer = new FakePlayer(platform, MinecraftServer.getServer(), CraftLocation.toVec3D(pos), pos.getYaw(), pos.getPitch(), ((CraftWorld) pos.getWorld()).getHandle(), IServerBot.getProfile());
                 ServerBot spawningBot = new ServerBot(fakePlayer, platform, player, settings);
@@ -166,81 +118,124 @@ public class BotSettingGui {
                 click.getPlayer().closeInventory();
             }));
         } else {
-            gui.setItem(3, 5, new SimpleItem(new ItemBuilder(Material.ENDER_PEARL)
-                    .setDisplayName(wrap("<aqua>Teleport to You"))
+            gui.setItem(7, 1, new SimpleItem(new ItemBuilder(Material.ENDER_PEARL)
+                    .setDisplayName(wrap("<#cdd6fa>Teleport to you"))
                     .addLoreLines(empty())
-                    .addLoreLines(wrap("<gray>We lost contact, attempting automatic"))
-                    .addLoreLines(wrap("<gray>reconnecting ... failed, requires"))
-                    .addLoreLines(wrap("<gray>Human validation."))
+                    .addLoreLines(wrap("<gray>Teleport your bot back to you!"))
                     .addLoreLines(empty())
-                    .addLoreLines(wrap(player.getScoreboardName().equals("Dolphinzo") && BuildConstants.EASTER_EGGS ? "<red>You are not Human." : "<yellow>Click to reconnect!")), click -> {
+                    .addLoreLines(wrap("<#cdd6fa>\uD83D\uDF8D\u25cf Click to teleport")), click -> {
                 Vec3 pos = player.position();
                 bot.getVanillaPlayer().teleportTo(player.serverLevel(), pos.x, pos.y, pos.z, player.getYRot(), player.getXRot());
                 click.getPlayer().closeInventory();
             }));
-            gui.setItem(5, 5, new SimpleItem(new ItemBuilder(Material.TNT)
-                    .setDisplayName(wrap("<aqua>Despawn"))
+            gui.setItem(7, 2, new SimpleItem(new ItemBuilder(Material.TNT)
+                    .setDisplayName(wrap("<#cdd6fa>Despawn"))
                     .addLoreLines(empty())
-                    .addLoreLines(wrap("<gray>No longer want it to exist? You're"))
-                    .addLoreLines(wrap("<gray>just a click away from destroying this .. bot?"))
+                    .addLoreLines(wrap("<gray>Despawn your current bot"))
                     .addLoreLines(empty())
-                    .addLoreLines(wrap("<yellow>Click to despawn!")), click -> {
+                    .addLoreLines(wrap("<#cdd6fa>\uD83D\uDF8D\u25cf Click to despawn")), click -> {
                 bot.destroy();
                 click.getPlayer().closeInventory();
             }));
         }
-
-        gui.setItem(4, 5, new SimpleItem(new ItemBuilder(Material.BARRIER)
-                .setDisplayName(wrap("<red>Close")), click -> {
-            click.getPlayer().closeInventory();
-        }));
         Window.single()
                 .setGui(gui)
-                .setTitle(wrap("<aqua>Bot Settings"))
+                .setTitle(wrap("Train"))
                 .build(player.getBukkitEntity()).open();
     }
 
     private static void addEquipmentItems(Gui gui, Runnable show, int x, int y, EquipmentSlot slot, ServerBotSettings settings) {
         ServerBotSettings.ArmorPiece armor = settings.armor.get(slot);
-        setBoolItem(gui, show, x, y, armor.blastProtection(),
-                new ItemBuilder(Material.ENCHANTED_BOOK)
-                        .setDisplayName(wrap("<aqua>Blast Protection"))
-                        .addLoreLines(wrap(String.format("<dark_gray>for the %s", ItemUtil.getSlotName(slot))))
+        setBoolItem(gui, show, x, y + 1, armor.blastProtection(),
+                new ItemBuilder(Material.LIME_DYE)
+                        .addEnchantment(Enchantment.MENDING,1, true)
+                        .addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ADDITIONAL_TOOLTIP)
+                        .setDisplayName(wrap("<#cdd6fa>Blast Protection"))
                         .addLoreLines(empty())
-                        .addLoreLines(wrap("<gray>Selected: <green><bold>ON"))
+                        .addLoreLines(wrap("<gray>Toggle the Blast Protection"))
+                        .addLoreLines(wrap(String.format("<gray>Enchant for the %s", ItemUtil.getSlotName(slot))))
                         .addLoreLines(empty())
-                        .addLoreLines(wrap("<yellow>Click to disable!"))
+                        .addLoreLines(wrap("<#cdd6fa>Enabled: <green><bold>ENABLED"))
+                        .addLoreLines(empty())
+                        .addLoreLines(wrap("<#cdd6fa>\uD83D\uDF8D\u25cf Click to toggle"))
                         .get(),
-                new ItemBuilder(Material.BOOK)
-                        .setDisplayName(wrap("<aqua>Blast Protection"))
-                        .addLoreLines(wrap(String.format("<dark_gray>for the %s", ItemUtil.getSlotName(slot))))
+                new ItemBuilder(Material.RED_DYE)
+                        .setDisplayName(wrap("<#cdd6fa>Blast Protection"))
                         .addLoreLines(empty())
-                        .addLoreLines(wrap("<gray>Selected: <red><bold>OFF"))
+                        .addLoreLines(wrap("<gray>Toggle the Blast Protection"))
+                        .addLoreLines(wrap(String.format("<gray>Enchant for the %s", ItemUtil.getSlotName(slot))))
                         .addLoreLines(empty())
-                        .addLoreLines(wrap("<yellow>Click to enable!"))
+                        .addLoreLines(wrap("<#cdd6fa>Enabled: <red><bold>DISABLED"))
+                        .addLoreLines(empty())
+                        .addLoreLines(wrap("<#cdd6fa>\uD83D\uDF8D\u25cf Click to toggle"))
                         .get(),
                 v -> settings.armor.put(slot, armor.withBlastProtection(v)));
-        setCycleItem(gui, show, x + 1, y, armor.type(), new ServerBotSettings.ArmorType[] { ServerBotSettings.ArmorType.NETHERITE, ServerBotSettings.ArmorType.DIAMOND },
+        setCycleItem(gui, show, x, y, armor.type(), new ServerBotSettings.ArmorType[] { ServerBotSettings.ArmorType.NETHERITE, ServerBotSettings.ArmorType.DIAMOND, ServerBotSettings.ArmorType.IRON, ServerBotSettings.ArmorType.GOLD, ServerBotSettings.ArmorType.CHAIN },
                 new ItemStack[] {
                         new ItemBuilder(CraftItemStack.asNewCraftStack(armor.type().slotToItem.get(slot)))
+                                .addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ADDITIONAL_TOOLTIP, ItemFlag.HIDE_ITEM_SPECIFICS)
                                 .addEnchantment(Enchantment.MENDING, 1, true)
                                 .addItemFlags(ItemFlag.HIDE_ENCHANTS)
-                                .setDisplayName(wrap("<aqua>Armor Type"))
-                                .addLoreLines(wrap(String.format("<dark_gray>for the %s", ItemUtil.getSlotName(slot))))
+                                .setDisplayName(wrap("<#cdd6fa>Armor Type"))
                                 .addLoreLines(empty())
-                                .addLoreLines(wrap("<gray>Selected: <light_purple><bold>NETHERITE"))
+                                .addLoreLines(wrap("<gray>Click to change the armor"))
+                                .addLoreLines(wrap(String.format("<gray>type for the %s", ItemUtil.getSlotName(slot))))
                                 .addLoreLines(empty())
-                                .addLoreLines(wrap("<yellow>Click to cycle!"))
+                                .addLoreLines(wrap("<#cdd6fa>Enabled: <#cdd6fa><bold>NETHERITE"))
+                                .addLoreLines(empty())
+                                .addLoreLines(wrap("<#cdd6fa>\uD83D\uDF8D\u25cf Click to toggle"))
                                 .get(),
                         new ItemBuilder(CraftItemStack.asNewCraftStack(armor.type().slotToItem.get(slot)))
+                                .addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ADDITIONAL_TOOLTIP, ItemFlag.HIDE_ITEM_SPECIFICS)
                                 .addEnchantment(Enchantment.MENDING, 1, true)
                                 .addItemFlags(ItemFlag.HIDE_ENCHANTS)
-                                .setDisplayName(wrap("<aqua>Armor Type"))
-                                .addLoreLines(wrap(String.format("<dark_gray>for the %s", ItemUtil.getSlotName(slot))))
+                                .setDisplayName(wrap("<#cdd6fa>Armor Type"))
                                 .addLoreLines(empty())
-                                .addLoreLines(wrap("<gray>Selected: <aqua><bold>DIAMOND"))
+                                .addLoreLines(wrap("<gray>Click to change the armor"))
+                                .addLoreLines(wrap(String.format("<gray>type for the %s", ItemUtil.getSlotName(slot))))
                                 .addLoreLines(empty())
-                                .addLoreLines(wrap("<yellow>Click to cycle!"))
+                                .addLoreLines(wrap("<#cdd6fa>Enabled: <aqua><bold>DIAMOND"))
+                                .addLoreLines(empty())
+                                .addLoreLines(wrap("<#cdd6fa>\uD83D\uDF8D\u25cf Click to toggle"))
+                                .get(),
+                        new ItemBuilder(CraftItemStack.asNewCraftStack(armor.type().slotToItem.get(slot)))
+                                .addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ADDITIONAL_TOOLTIP, ItemFlag.HIDE_ITEM_SPECIFICS)
+                                .addEnchantment(Enchantment.MENDING, 1, true)
+                                .addItemFlags(ItemFlag.HIDE_ENCHANTS)
+                                .setDisplayName(wrap("<#cdd6fa>Armor Type"))
+                                .addLoreLines(empty())
+                                .addLoreLines(wrap("<gray>Click to change the armor"))
+                                .addLoreLines(wrap(String.format("<gray>type for the %s", ItemUtil.getSlotName(slot))))
+                                .addLoreLines(empty())
+                                .addLoreLines(wrap("<#cdd6fa>Enabled: <white><bold>IRON"))
+                                .addLoreLines(empty())
+                                .addLoreLines(wrap("<#cdd6fa>\uD83D\uDF8D\u25cf Click to toggle"))
+                                .get(),
+                        new ItemBuilder(CraftItemStack.asNewCraftStack(armor.type().slotToItem.get(slot)))
+                                .addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ADDITIONAL_TOOLTIP, ItemFlag.HIDE_ITEM_SPECIFICS)
+                                .addEnchantment(Enchantment.MENDING, 1, true)
+                                .addItemFlags(ItemFlag.HIDE_ENCHANTS)
+                                .setDisplayName(wrap("<#cdd6fa>Armor Type"))
+                                .addLoreLines(empty())
+                                .addLoreLines(wrap("<gray>Click to change the armor"))
+                                .addLoreLines(wrap(String.format("<gray>type for the %s", ItemUtil.getSlotName(slot))))
+                                .addLoreLines(empty())
+                                .addLoreLines(wrap("<#cdd6fa>Enabled: <yellow><bold>GOLD"))
+                                .addLoreLines(empty())
+                                .addLoreLines(wrap("<#cdd6fa>\uD83D\uDF8D\u25cf Click to toggle"))
+                                .get(),
+                        new ItemBuilder(CraftItemStack.asNewCraftStack(armor.type().slotToItem.get(slot)))
+                                .addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ADDITIONAL_TOOLTIP, ItemFlag.HIDE_ITEM_SPECIFICS)
+                                .addEnchantment(Enchantment.MENDING, 1, true)
+                                .addItemFlags(ItemFlag.HIDE_ENCHANTS)
+                                .setDisplayName(wrap("<#cdd6fa>Armor Type"))
+                                .addLoreLines(empty())
+                                .addLoreLines(wrap("<gray>Click to change the armor"))
+                                .addLoreLines(wrap(String.format("<gray>type for the %s", ItemUtil.getSlotName(slot))))
+                                .addLoreLines(empty())
+                                .addLoreLines(wrap("<#cdd6fa>Enabled: <white><bold>CHAINMAIL"))
+                                .addLoreLines(empty())
+                                .addLoreLines(wrap("<#cdd6fa>\uD83D\uDF8D\u25cf Click to toggle"))
                                 .get(),
                 }, v -> settings.armor.put(slot, armor.withType(v)));
     }

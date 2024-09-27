@@ -1,4 +1,4 @@
-name: blade
+name: Blade
 version: '${version}'
 main: blade.paper.BotPlugin
 api-version: '1.21.1'

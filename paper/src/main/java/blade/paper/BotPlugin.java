@@ -41,9 +41,8 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class BotPlugin extends JavaPlugin {
-    public static final TextColor PRIMARY = TextColor.color(0xFFCBD5);
+    public static final TextColor PRIMARY = TextColor.color(0xCDD6FA);
     public static PaperPlatform platform;
-    private static final Map<String, BladeDebug> reports = new HashMap<>();
 
     @Override
     public void onLoad() {
@@ -96,25 +95,6 @@ public class BotPlugin extends JavaPlugin {
                             ServerBot bot = new ServerBot(fakePlayer, platform, ((CraftPlayer) sender).getHandle(), ServerBotSettings.SHIELD.clone());
                             platform.addBot(bot);
                             sender.sendMessage(Component.text("Spawned a shield bot!", PRIMARY));
-                        }))
-                .then(new LiteralArgument("control")
-                        .withPermission("bot.control")
-                        .then(createPossibleBots(new PlayerArgument("who"), args -> ((CraftPlayer) args.get("who")).getHandle())))
-                .then(new LiteralArgument("spawn")
-                        .withPermission("bot.spawn")
-                        .then(createPossibleBots(new LocationArgument("where"), args -> {
-                            Location pos = (Location) args.get("where");
-                            return new FakePlayer(platform, MinecraftServer.getServer(), CraftLocation.toVec3D(pos), pos.getYaw(), pos.getPitch(), ((CraftWorld) pos.getWorld()).getHandle(), IServerBot.getProfile());
-                        })))
-                .then(new LiteralArgument("removeall")
-                        .withPermission("bot.removeall")
-                        .executes((sender, args) -> {
-                            platform.removeAll();
-                        }))
-                .then(new LiteralArgument("count")
-                        .withPermission("bot.count")
-                        .executes((sender, args) -> {
-                            sender.sendMessage(Component.text("There are currently " + PaperPlatform.BOTS.size() + " blade bot(s)."));
                         }))
                 .executesPlayer((sender, args) -> {
                     for (Bot b : PaperPlatform.BOTS) {

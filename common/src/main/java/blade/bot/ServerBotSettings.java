@@ -74,9 +74,36 @@ public class ServerBotSettings implements Cloneable {
     }
 
     public enum ArmorType {
-        NETHERITE(Map.of(EquipmentSlot.HEAD, Items.NETHERITE_HELMET, EquipmentSlot.CHEST, Items.NETHERITE_CHESTPLATE, EquipmentSlot.LEGS, Items.NETHERITE_LEGGINGS, EquipmentSlot.FEET, Items.NETHERITE_BOOTS)),
-        DIAMOND(Map.of(EquipmentSlot.HEAD, Items.DIAMOND_HELMET, EquipmentSlot.CHEST, Items.DIAMOND_CHESTPLATE, EquipmentSlot.LEGS, Items.DIAMOND_LEGGINGS, EquipmentSlot.FEET, Items.DIAMOND_BOOTS)),
-        ;
+        NETHERITE(Map.of(
+                EquipmentSlot.HEAD, Items.NETHERITE_HELMET,
+                EquipmentSlot.CHEST, Items.NETHERITE_CHESTPLATE,
+                EquipmentSlot.LEGS, Items.NETHERITE_LEGGINGS,
+                EquipmentSlot.FEET, Items.NETHERITE_BOOTS
+        )),
+        DIAMOND(Map.of(
+                EquipmentSlot.HEAD, Items.DIAMOND_HELMET,
+                EquipmentSlot.CHEST, Items.DIAMOND_CHESTPLATE,
+                EquipmentSlot.LEGS, Items.DIAMOND_LEGGINGS,
+                EquipmentSlot.FEET, Items.DIAMOND_BOOTS
+        )),
+        IRON(Map.of(
+                EquipmentSlot.HEAD, Items.IRON_HELMET,
+                EquipmentSlot.CHEST, Items.IRON_CHESTPLATE,
+                EquipmentSlot.LEGS, Items.IRON_LEGGINGS,
+                EquipmentSlot.FEET, Items.IRON_BOOTS
+        )),
+        GOLD(Map.of(
+                EquipmentSlot.HEAD, Items.GOLDEN_HELMET,
+                EquipmentSlot.CHEST, Items.GOLDEN_CHESTPLATE,
+                EquipmentSlot.LEGS, Items.GOLDEN_LEGGINGS,
+                EquipmentSlot.FEET, Items.GOLDEN_BOOTS
+        )),
+        CHAIN(Map.of(
+                EquipmentSlot.HEAD, Items.CHAINMAIL_HELMET,
+                EquipmentSlot.CHEST, Items.CHAINMAIL_CHESTPLATE,
+                EquipmentSlot.LEGS, Items.CHAINMAIL_LEGGINGS,
+                EquipmentSlot.FEET, Items.CHAINMAIL_BOOTS
+        ));
 
         public final Map<EquipmentSlot, Item> slotToItem;
 
